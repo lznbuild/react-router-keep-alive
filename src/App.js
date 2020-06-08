@@ -1,54 +1,74 @@
-import React, { Component} from 'react';
-import './App.less';
-import Page1 from './components/page1/index';
-import { connect } from 'react-redux';
+import React, { Component, useState } from "react";
+import KeepAlive, { AliveScope } from "./components/keepAlive";
 
-const mapStateToProps = (state, ownProps) => ({
-  num:state.todos.num
-})
+import {
+  BrowserRouter,
+  HashRouter,
+  Prompt,
+  MemoryRouter,
+  Route,
+  Link
+} from 'react-router-dom';
 
-const mapDispatchToProps = (dispatch, ownProps) => ({
-  onClick: () => {
-    dispatch({
-      type: 'ADD_TODO',
-      payload: 9
-    })
-  }
-})
 
-const { Provider } = React.createContext();
+const Page1 = () => {
+  const [count,setCount] = useState(0)
+  return (
+    <div>
+      {count}
+      <button onClick={() => setCount(count + 1)}>+1</button>
+    </div>
+  );
+}
+const Page2 = () => {
+  return (
+    <div>page22</div>
+  )
+}
+
+
 class App extends Component {
   constructor(props) {
-    super(props)
-    this.refDom = React.createRef()
-
-    this.state = {
-      age: 91
-    }
+    super(props);
   }
 
-
-  fn = () => {
-    setTimeout(() => {
-      this.props.onClick()
-    }, 3000)
+  getConfirmation = (message, callback) => {
+    const allowTransition = window.confirm(message);
+    callback(allowTransition);
+    console.log(message,'message');
   }
-
 
   render() {
-    const { age } = this.state;
-    const { num } = this.props;
     return (
-      <div className="digital-drive-container">
-        <div>{num}</div>
-        <Page1
-          attr={age}
-          exa
-        /> 
-        <button onClick={this.fn}>-</button>
+      <div>
+        <HashRouter>
+          <nav>
+            <ul>
+              <li>
+                <Link to="/page1">page1</Link>
+              </li>
+              <li>
+                <Link to="/page2">page2</Link>
+              </li>
+            </ul>
+          </nav>
+          <Route
+            path="/page1"
+            render={() => (
+              <KeepAlive id="Test">
+                <Page1 />
+              </KeepAlive>
+            )}
+          />
+
+          <Route component={Page2} path="/page2" />
+        </HashRouter>
       </div>
-    )
+    );
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+
+
+
+export default App;
