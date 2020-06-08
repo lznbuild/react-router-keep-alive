@@ -6,4 +6,4 @@
 
 withScope 高阶组件，统一通过React context 的Consumer接受最外层AliveScope传递的keep方法  
 
-AliveScope  
+AliveScope  首次渲染或者路由切换的时候添加对应的真实dom节点 
