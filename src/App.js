@@ -14,16 +14,20 @@ import {
 const Page1 = () => {
   const [count,setCount] = useState(0)
   return (
-    <div>
+    <div id="page1">
       {count}
-      <button onClick={() => setCount(count + 1)}>+1</button>
+      <button onClick={() => setCount(count + 1)}>+1 page1</button>
     </div>
   );
 }
 const Page2 = () => {
-  return (
-    <div>page22</div>
-  )
+   const [count, setCount] = useState(0);
+   return (
+     <div id="page2">
+       {count}
+       <button onClick={() => setCount(count + 1)}>+1 page2</button>
+     </div>
+   );
 }
 
 
@@ -55,13 +59,21 @@ class App extends Component {
           <Route
             path="/page1"
             render={() => (
-              <KeepAlive id="Test">
+              <KeepAlive id="Test1">
                 <Page1 />
               </KeepAlive>
             )}
           />
 
-          <Route component={Page2} path="/page2" />
+          <Route
+            path="/page2"
+            render={() => (
+              <KeepAlive id="Test2">
+                <Page2 />
+              </KeepAlive>
+            )}
+          />
+
         </HashRouter>
       </div>
     );
